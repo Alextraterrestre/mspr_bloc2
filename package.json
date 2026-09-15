@@ -11,10 +11,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.1",
-    "flowbite": "^4.0.2",
-    "flowbite-react": "^0.12.17",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-router-dom": "^7.18.3",
     "tailwindcss": "^4.3.1"
   },
   "devDependencies": {

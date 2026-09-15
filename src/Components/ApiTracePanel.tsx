@@ -1,6 +1,6 @@
 import React from 'react'
 import { ServerIcon } from 'lucide-react'
-import type { RequestState } from '../types'
+import type { RequestState } from '../Types'
 
 interface ApiTracePanelProps {
     endpoint: string

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from 'react'
-import type { AccountState } from '../types'
+import type { AccountState } from '../Types'
 
 interface DemoState {
     username: string

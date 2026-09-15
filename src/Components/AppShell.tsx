@@ -1,8 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { CheckIcon, ShieldCheckIcon } from 'lucide-react'
-import { flowSteps } from '../data/steps'
-import { useDemo } from '../contexts/DemoContext'
+import { flowSteps } from '../Data/Steps'
+import { useDemo } from '../Contexts/DemoContext'
 
 interface AppShellProps {
     children: React.ReactNode

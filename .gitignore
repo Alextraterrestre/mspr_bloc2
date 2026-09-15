@@ -23,5 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+.git
+.gitignore
+README.md
+node\_modules
+.DS\_Store
+
 #ENVIRONMENT FILES
 *.env*

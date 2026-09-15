@@ -1,16 +1,13 @@
 import './App.css'
-import 'flowbite';
-import { Auth } from './Components/auth';
-import { Button } from "flowbite-react";
+import { Auth } from './Components/Auth';
+import { Button } from './Components/UI/Button';
 
-function App() {
+export default function App() {
 
   return (
     <>
-      <Button>Click me</Button>
-      <Auth/>
-    </>
-  )
+        <Button>Click me</Button>
+        <Auth />
+      </>
+      )
 }
-
-export default App

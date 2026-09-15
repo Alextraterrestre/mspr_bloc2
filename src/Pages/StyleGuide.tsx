@@ -1,8 +1,8 @@
 import React from 'react'
-import { Alert } from '../components/ui/Alert'
-import { Button } from '../components/ui/Button'
-import { Card } from '../components/ui/Card'
-import { Field } from '../components/ui/Field'
+import { Alert } from '../Components/UI/Alerts'
+import { Button } from '../Components/UI/Button'
+import { Card } from '../Components/UI/Card'
+import { Field } from '../Components/UI/Fields'
 
 const COLORS: { name: string; token: string; hex: string; usage: string; dark?: boolean }[] = [
     { name: 'Texte principal', token: 'ink', hex: '#0F172A', usage: 'Titres, valeurs', dark: true },

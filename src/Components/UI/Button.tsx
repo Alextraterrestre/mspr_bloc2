@@ -1,59 +1,71 @@
 import React from 'react'
-import {
-    AlertTriangleIcon,
-    CheckCircle2Icon,
-    InfoIcon,
-    XOctagonIcon,
-} from 'lucide-react'
 
-type Tone = 'info' | 'success' | 'error' | 'warning'
+type Variant = 'primary' | 'secondary' | 'ghost' | 'danger'
 
-interface AlertProps {
-    tone?: Tone
-    title: string
-    children?: React.ReactNode
-    actions?: React.ReactNode
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: Variant
+    loading?: boolean
+    icon?: React.ReactNode
 }
 
-const TONES: Record<Tone, { box: string; icon: React.ReactNode; text: string }> = {
-    info: {
-        box: 'border-brand-100 bg-brand-50',
-        text: 'text-brand-800',
-        icon: <InfoIcon aria-hidden="true" className="h-5 w-5 text-brand-700" />,
-    },
-    success: {
-        box: 'border-success-200 bg-success-50',
-        text: 'text-success-700',
-        icon: <CheckCircle2Icon aria-hidden="true" className="h-5 w-5 text-success-700" />,
-    },
-    warning: {
-        box: 'border-warning-200 bg-warning-50',
-        text: 'text-warning-700',
-        icon: <AlertTriangleIcon aria-hidden="true" className="h-5 w-5 text-warning-700" />,
-    },
-    error: {
-        box: 'border-danger-200 bg-danger-50',
-        text: 'text-danger-800',
-        icon: <XOctagonIcon aria-hidden="true" className="h-5 w-5 text-danger-700" />,
-    },
+const VARIANT_CLASSES: Record<Variant, string> = {
+    primary:
+        'border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2',
+    secondary:
+        'border border-line bg-white text-ink hover:bg-surface-sunken focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2',
+    ghost:
+        'border border-transparent bg-transparent text-ink hover:bg-surface-sunken focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2',
+    danger:
+        'border border-transparent bg-danger-700 text-white hover:bg-danger-800 focus-visible:ring-2 focus-visible:ring-danger-600 focus-visible:ring-offset-2',
 }
 
-export function Alert({ tone = 'info', title, children, actions }: AlertProps) {
-    const style = TONES[tone]
-    const isLive = tone === 'error' || tone === 'success'
+export function Button({
+    variant = 'primary',
+    loading = false,
+    icon,
+    disabled,
+    className = '',
+    children,
+    ...props
+}: ButtonProps) {
+    const isDisabled = disabled || loading
 
     return (
-        <div
-            role={tone === 'error' ? 'alert' : 'status'}
-            aria-live={isLive ? 'polite' : undefined}
-            className={`flex gap-3 rounded-md border p-4 ${style.box}`}
+        <button
+            {...props}
+            disabled={isDisabled}
+            aria-busy={loading || undefined}
+            className={[
+                'inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md px-4 text-sm font-semibold transition-colors duration-150 ease-out',
+                'disabled:cursor-not-allowed disabled:opacity-70',
+                VARIANT_CLASSES[variant],
+                className,
+            ].join(' ')}
         >
-            <div className="mt-0.5 shrink-0">{style.icon}</div>
-            <div className="flex flex-col gap-2">
-                <p className={`text-[15px] font-semibold ${style.text}`}>{title}</p>
-                {children && <div className="text-sm leading-relaxed text-ink-muted">{children}</div>}
-                {actions && <div className="flex flex-wrap gap-2 pt-1">{actions}</div>}
-            </div>
-        </div>
+            {loading && (
+                <svg
+                    aria-hidden="true"
+                    className="h-4 w-4 animate-spin"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                    />
+                    <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
+                </svg>
+            )}
+            {!loading && icon && <span className="shrink-0">{icon}</span>}
+            {children}
+        </button>
     )
 }

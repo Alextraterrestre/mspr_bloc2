@@ -1,4 +1,4 @@
-import type { GeneratedPassword, LoginError, TotpSecret } from '../types'
+import type { GeneratedPassword, LoginError, TotpSecret } from '../Types'
 
 const PASSWORD_ALPHABET =
     'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%&*?-_=+'

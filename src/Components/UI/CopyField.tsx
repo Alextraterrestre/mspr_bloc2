@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { CheckIcon, CopyIcon } from 'lucide-react'
 
 interface CopyFieldProps {

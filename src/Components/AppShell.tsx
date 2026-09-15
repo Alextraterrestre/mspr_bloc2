@@ -1,14 +1,9 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import { CheckIcon, ShieldCheckIcon } from 'lucide-react'
 import { flowSteps } from '../Data/Steps'
 import { useDemo } from '../Contexts/DemoContext'
 
-interface AppShellProps {
-    children: React.ReactNode
-}
-
-export function AppShell({ children }: AppShellProps) {
+export function AppShell() {
     const { username, passwordIssued, totpConfigured, accountState } = useDemo()
 
     const done: Record<string, boolean> = {
@@ -133,7 +128,7 @@ export function AppShell({ children }: AppShellProps) {
                 </nav>
 
                 <main id="contenu" className="min-w-0 flex-1">
-                    {children}
+                    <Outlet />
                 </main>
             </div>
         </div>

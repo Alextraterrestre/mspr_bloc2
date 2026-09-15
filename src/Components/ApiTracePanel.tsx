@@ -1,4 +1,3 @@
-import React from 'react'
 import { ServerIcon } from 'lucide-react'
 import type { RequestState } from '../Types'
 

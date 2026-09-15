@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRightIcon, KeyRoundIcon, RefreshCwIcon } from 'lucide-react'
 import { StepHeader } from '../Components/StepHeader'
-import { ApiTracePanel } from '../Components/ApiTracePanel'
 import { QrPanel } from '../Components/QrPanel'
 import { Alert } from '../Components/UI/Alerts'
 import { Button } from '../Components/UI/Button'
@@ -151,16 +150,6 @@ export function CreateAccount() {
                     </div>
                 </Card>
             </div>
-
-            <ApiTracePanel
-                endpoint="POST /function/generate-password"
-                state={state}
-                notes={[
-                    'Corps attendu : { "username": "…" }',
-                    'Réponse : mot de passe de 24 caractères encodé dans le QR code.',
-                    "Le front ne stocke rien : l'affichage est éphémère.",
-                ]}
-            />
         </div>
     )
 }

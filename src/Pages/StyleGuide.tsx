@@ -1,4 +1,3 @@
-import React from 'react'
 import { Alert } from '../Components/UI/Alerts'
 import { Button } from '../Components/UI/Button'
 import { Card } from '../Components/UI/Card'

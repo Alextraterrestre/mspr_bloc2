@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CheckCircle2Icon, KeyRoundIcon, SmartphoneIcon } from 'lucide-react'
 import { StepHeader } from '../Components/StepHeader'
-import { ApiTracePanel } from '../Components/ApiTracePanel'
 import { QrPanel } from '../Components/QrPanel'
 import { Alert } from '../Components/UI/Alerts'
 import { Button } from '../Components/UI/Button'
@@ -218,16 +217,6 @@ export function RenewAccount() {
                     </Card>
                 </div>
             </div>
-
-            <ApiTracePanel
-                endpoint="POST /function/rotate-credentials"
-                state={globalState}
-                notes={[
-                    'Pré-requis : generate-password + generate-totp-secret.',
-                    'Révoque les anciens secrets côté cluster.',
-                    'Réponse : nouvelle date d\'expiration (+6 mois).',
-                ]}
-            />
         </div>
     )
 }

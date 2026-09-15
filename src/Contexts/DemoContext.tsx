@@ -1,6 +1,16 @@
 import React, { createContext, useContext, useMemo, useState } from 'react'
 import type { AccountState } from '../Types'
 
+function deriveAccountState(expiresAt: string | null): AccountState {
+    if (!expiresAt) return 'active'
+    const now = Date.now()
+    const expiry = new Date(expiresAt).getTime()
+    const fifteenDaysMs = 15 * 24 * 60 * 60 * 1000
+    if (expiry <= now) return 'expired'
+    if (expiry - now <= fifteenDaysMs) return 'expiring'
+    return 'active'
+}
+
 interface DemoState {
     username: string
     setUsername: (value: string) => void
@@ -17,12 +27,11 @@ interface DemoState {
 const DemoContext = createContext<DemoState | null>(null)
 
 interface DemoProviderProps {
-    accountState: AccountState
-    forceApiError: boolean
+    forceApiError?: boolean
     children: React.ReactNode
 }
 
-export function DemoProvider({ accountState, forceApiError, children }: DemoProviderProps) {
+export function DemoProvider({ forceApiError = false, children }: DemoProviderProps) {
     const [username, setUsername] = useState('')
     const [passwordIssued, setPasswordIssued] = useState(false)
     const [totpConfigured, setTotpConfigured] = useState(false)
@@ -38,10 +47,10 @@ export function DemoProvider({ accountState, forceApiError, children }: DemoProv
             setTotpConfigured,
             expiresAt,
             setExpiresAt,
-            accountState,
+            accountState: deriveAccountState(expiresAt),
             forceApiError,
         }),
-        [username, passwordIssued, totpConfigured, expiresAt, accountState, forceApiError],
+        [username, passwordIssued, totpConfigured, expiresAt, forceApiError],
     )
 
     return <DemoContext.Provider value={value}>{children}</DemoContext.Provider>

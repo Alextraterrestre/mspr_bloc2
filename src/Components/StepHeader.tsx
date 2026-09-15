@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface StepHeaderProps {
     order: string
     title: string

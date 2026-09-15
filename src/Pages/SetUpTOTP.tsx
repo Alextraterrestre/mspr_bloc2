@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRightIcon, RefreshCwIcon, SmartphoneIcon } from 'lucide-react'
 import { StepHeader } from '../Components/StepHeader'
-import { ApiTracePanel } from '../Components/ApiTracePanel'
 import { QrPanel } from '../Components/QrPanel'
 import { Alert } from '../Components/UI/Alerts'
 import { Button } from '../Components/UI/Button'
@@ -129,16 +128,6 @@ export function SetupTotp() {
                     </div>
                 </Card>
             </div>
-
-            <ApiTracePanel
-                endpoint="POST /function/generate-totp-secret"
-                state={state}
-                notes={[
-                    'Réponse : secret Base32 + URI otpauth://',
-                    'Algorithme SHA1, 6 chiffres, période 30 s.',
-                    'Le secret est stocké chiffré côté cluster.',
-                ]}
-            />
         </div>
     )
 }

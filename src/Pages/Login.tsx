@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { EyeIcon, EyeOffIcon, LogInIcon, RotateCcwIcon } from 'lucide-react'
 import { StepHeader } from '../Components/StepHeader'
-import { ApiTracePanel } from '../Components/ApiTracePanel'
 import { Alert } from '../Components/UI/Alerts'
 import { Button } from '../Components/UI/Button'
 import { Card } from '../Components/UI/Card'
@@ -178,17 +177,6 @@ export function Login() {
                     )}
                 </Card>
             </div>
-
-            <ApiTracePanel
-                endpoint="POST /function/auth-login"
-                state={state}
-                notes={[
-                    'Corps : { username, password, totp }',
-                    '401 : identifiants ou code invalide.',
-                    '403 ACCOUNT_EXPIRED : rotation obligatoire.',
-                    '5xx : gateway OpenFaaS indisponible.',
-                ]}
-            />
         </div>
     )
 }

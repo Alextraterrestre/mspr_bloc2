@@ -1,0 +1,15 @@
+node_modules
+dist
+.git
+.gitignore
+.vscode
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.local
+*.env*
+README.md
+docker-compose*.yml
+Dockerfile
+.dockerignore

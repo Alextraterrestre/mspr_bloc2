@@ -25,15 +25,6 @@ export function RenewAccount() {
     const [finalState, setFinalState] = useState<RequestState>('idle')
     const [newExpiry, setNewExpiry] = useState<string | null>(null)
 
-    const globalState: RequestState =
-        pwdState === 'loading' || totpState === 'loading' || finalState === 'loading'
-            ? 'loading'
-            : pwdState === 'error' || totpState === 'error' || finalState === 'error'
-                ? 'error'
-                : finalState === 'success'
-                    ? 'success'
-                    : 'idle'
-
     const rotatePassword = async () => {
         setPwdError(undefined)
         setPwdState('loading')

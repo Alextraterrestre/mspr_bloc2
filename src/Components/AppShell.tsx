@@ -72,7 +72,7 @@ export function AppShell() {
                                     to={step.path}
                                     className={({ isActive }) =>
                                         [
-                                            'flex min-h-[56px] items-start gap-3 rounded-md border px-3 py-2.5 transition-colors duration-150 ease-out',
+                                            'flex min-h-14 items-start gap-3 rounded-md border px-3 py-2.5 transition-colors duration-150 ease-out',
                                             isActive
                                                 ? 'border-brand-600 bg-white'
                                                 : 'border-transparent hover:border-line hover:bg-white',
@@ -110,7 +110,7 @@ export function AppShell() {
                             </li>
                         ))}
                         <li className="mt-2 border-t border-line pt-2">
-                            <NavLink
+                            {/* <NavLink
                                 to="/style-guide"
                                 className={({ isActive }) =>
                                     [
@@ -122,7 +122,7 @@ export function AppShell() {
                                 }
                             >
                                 Style guide
-                            </NavLink>
+                            </NavLink> */}
                         </li>
                     </ol>
                 </nav>

@@ -38,7 +38,7 @@ export function QrPanel({ value, caption, oneTime = false, badge }: QrPanelProps
                         <button
                             type="button"
                             onClick={() => setRevealed(true)}
-                            className="inline-flex min-h-[48px] items-center gap-2 rounded-md bg-brand-600 px-4 text-sm font-semibold text-white transition-colors duration-150 ease-out hover:bg-brand-700"
+                            className="inline-flex min-h-12 items-center gap-2 rounded-md bg-brand-600 px-4 text-sm font-semibold text-white transition-colors duration-150 ease-out hover:bg-brand-700"
                         >
                             <EyeIcon aria-hidden="true" className="h-4 w-4" />
                             Afficher le QR code

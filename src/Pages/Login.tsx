@@ -148,7 +148,7 @@ export function Login() {
                                 onChange={(event) => setTotp(event.target.value.replace(/\D/g, ''))}
                                 placeholder="000000"
                                 hint="Code à 6 chiffres affiché par votre application d'authentification."
-                                className="max-w-[200px] text-lg tracking-[0.35em]"
+                                className="max-w-50 text-lg tracking-[0.35em]"
                             />
 
                             <div className="flex flex-wrap items-center gap-3 border-t border-line pt-5">

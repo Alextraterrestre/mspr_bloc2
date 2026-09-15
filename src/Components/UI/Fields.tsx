@@ -43,7 +43,7 @@ export function Field({
                     aria-describedby={[hintId, errorId].filter(Boolean).join(' ') || undefined}
                     aria-invalid={error ? true : undefined}
                     className={[
-                        'min-h-[48px] w-full rounded-md border bg-white px-3.5 text-[15px] text-ink',
+                        'min-h-12 w-full rounded-md border bg-white px-3.5 text-[15px] text-ink',
                         'placeholder:text-ink-subtle transition-colors duration-150 ease-out',
                         'disabled:cursor-not-allowed disabled:bg-surface-sunken disabled:text-ink-subtle',
                         mono ? 'font-mono tracking-tight' : '',

@@ -6,14 +6,13 @@ import { QrPanel } from '../Components/QrPanel'
 import { Alert } from '../Components/UI/Alerts'
 import { Button } from '../Components/UI/Button'
 import { Card } from '../Components/UI/Card'
-import { CopyField } from '../Components/UI/CopyField'
 import { useDemo } from '../Contexts/DemoContext'
-import { generateTotpSecret } from '../Utils/MockApi'
+import { generateTotpSecret } from '../Utils/Api'
 import type { RequestState, TotpSecret } from '../Types'
 
 export function SetupTotp() {
     const navigate = useNavigate()
-    const { username, setTotpConfigured, forceApiError } = useDemo()
+    const { username, setTotpConfigured } = useDemo()
     const [state, setState] = useState<RequestState>('idle')
     const [error, setError] = useState<string | undefined>()
     const [secret, setSecret] = useState<TotpSecret | null>(null)
@@ -22,7 +21,7 @@ export function SetupTotp() {
         setError(undefined)
         setState('loading')
         try {
-            const data = await generateTotpSecret(username, forceApiError)
+            const data = await generateTotpSecret(username)
             setSecret(data)
             setState('success')
             setTotpConfigured(true)
@@ -82,8 +81,8 @@ export function SetupTotp() {
 
                         {state === 'loading' && (
                             <Alert tone="info" title="Génération du secret en cours…">
-                                Appel de <code className="font-mono">generate-totp-secret</code> sur le cluster
-                                Kubernetes.
+                                Appel de <code className="font-mono">generate-2fa</code> sur la gateway
+                                OpenFaaS.
                             </Alert>
                         )}
 
@@ -108,15 +107,9 @@ export function SetupTotp() {
                         {state === 'success' && secret && (
                             <>
                                 <QrPanel
-                                    value={secret.otpauthUri}
+                                    value={secret.qrImage}
                                     badge="QR code TOTP"
                                     caption="Scannez ce QR code avec une application d'authentification (Google Authenticator, FreeOTP, Authy…). Elle affichera ensuite un code à 6 chiffres renouvelé toutes les 30 secondes."
-                                />
-
-                                <CopyField
-                                    label="Clé de secours (saisie manuelle)"
-                                    description="À utiliser uniquement si le scan du QR code est impossible."
-                                    value={secret.secret}
                                 />
 
                                 <Alert tone="success" title="2FA activée pour ce compte">

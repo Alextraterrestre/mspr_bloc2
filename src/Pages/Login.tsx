@@ -7,12 +7,12 @@ import { Button } from '../Components/UI/Button'
 import { Card } from '../Components/UI/Card'
 import { Field } from '../Components/UI/Fields'
 import { useDemo } from '../Contexts/DemoContext'
-import { login } from '../Utils/MockApi'
+import { login } from '../Utils/Api'
 import type { LoginError, RequestState } from '../Types'
 
 export function Login() {
     const navigate = useNavigate()
-    const { username, setUsername, accountState, forceApiError } = useDemo()
+    const { username, setUsername } = useDemo()
     const [password, setPassword] = useState('')
     const [totp, setTotp] = useState('')
     const [showPassword, setShowPassword] = useState(false)
@@ -24,10 +24,7 @@ export function Login() {
         setError(null)
         setState('loading')
         try {
-            await login(
-                { username, password, totp },
-                { forceExpired: accountState === 'expired', forceError: forceApiError },
-            )
+            await login({ username, password, otp: totp })
             setState('success')
         } catch (err) {
             setState('error')
@@ -102,7 +99,7 @@ export function Login() {
                                 value={username}
                                 onChange={(event) => setUsername(event.target.value)}
                                 placeholder="ex. m.dupont"
-                                hint="Saisissez « expire » pour simuler un compte de plus de 6 mois."
+                                hint="Identifiant du compte créé à l'étape 1."
                             />
 
                             <Field

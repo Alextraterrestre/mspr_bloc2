@@ -9,21 +9,22 @@ export interface ApiTrace {
 }
 
 export interface GeneratedPassword {
-  password: string
-  issuedAt: string
+  qrImage: string
   expiresAt: string
-  payload: string
 }
 
 export interface TotpSecret {
-  secret: string
-  otpauthUri: string
-  issuer: string
-  account: string
+  qrImage: string
+}
+
+export interface LoginPayload {
+  username: string
+  password: string
+  otp: string
 }
 
 export interface LoginError {
-  code: 'INVALID_CREDENTIALS' | 'INVALID_TOTP' | 'ACCOUNT_EXPIRED' | 'GATEWAY_ERROR'
+  code: 'INVALID_CREDENTIALS' | 'INVALID_TOTP' | 'ACCOUNT_EXPIRED' | 'ACCOUNT_NOT_FOUND' | 'GATEWAY_ERROR'
   message: string
   hint?: string
 }

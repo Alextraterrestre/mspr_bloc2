@@ -31,3 +31,8 @@ node\_modules
 
 #ENVIRONMENT FILES
 *.env*
+
+#Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/

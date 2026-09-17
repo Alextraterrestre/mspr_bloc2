@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { QRCodeSVG } from 'qrcode.react'
 import { EyeIcon, QrCodeIcon } from 'lucide-react'
 
 interface QrPanelProps {
@@ -22,18 +21,13 @@ export function QrPanel({ value, caption, oneTime = false, badge }: QrPanelProps
                 </span>
             )}
             <div className="relative rounded-md border border-line bg-white p-4">
-                <QRCodeSVG
-                    value={value}
-                    size={196}
-                    level="M"
-                    bgColor="#ffffff"
-                    fgColor="#0f172a"
-                    aria-hidden={!revealed}
-                    role="img"
-                    aria-label={caption}
+                <img
+                    src={`data:image/png;base64,${value}`}
+                    alt={caption}
                     className={revealed ? '' : 'blur-md'}
                 />
                 {!revealed && (
+
                     <div className="absolute inset-0 flex items-center justify-center rounded-md bg-white/70 p-3">
                         <button
                             type="button"

@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CheckCircle2Icon, KeyRoundIcon, SmartphoneIcon } from 'lucide-react'
+import { KeyRoundIcon, SmartphoneIcon } from 'lucide-react'
 import { StepHeader } from '../Components/StepHeader'
 import { QrPanel } from '../Components/QrPanel'
 import { Alert } from '../Components/UI/Alerts'
 import { Button } from '../Components/UI/Button'
 import { Card } from '../Components/UI/Card'
 import { useDemo } from '../Contexts/DemoContext'
-import { finalizeRotation, generatePassword, generateTotpSecret } from '../Utils/MockApi'
+import { generatePassword, generateTotpSecret } from '../Utils/Api'
 import type { GeneratedPassword, RequestState, TotpSecret } from '../Types'
 
 export function RenewAccount() {
     const navigate = useNavigate()
-    const { username, forceApiError, setExpiresAt } = useDemo()
+    const { username } = useDemo()
 
     const [pwdState, setPwdState] = useState<RequestState>('idle')
     const [pwd, setPwd] = useState<GeneratedPassword | null>(null)
@@ -22,14 +22,11 @@ export function RenewAccount() {
     const [totp, setTotp] = useState<TotpSecret | null>(null)
     const [totpError, setTotpError] = useState<string | undefined>()
 
-    const [finalState, setFinalState] = useState<RequestState>('idle')
-    const [newExpiry, setNewExpiry] = useState<string | null>(null)
-
     const rotatePassword = async () => {
         setPwdError(undefined)
         setPwdState('loading')
         try {
-            setPwd(await generatePassword(username || 'utilisateur', forceApiError))
+            setPwd(await generatePassword(username || 'utilisateur'))
             setPwdState('success')
         } catch (error) {
             setPwdState('error')
@@ -41,23 +38,11 @@ export function RenewAccount() {
         setTotpError(undefined)
         setTotpState('loading')
         try {
-            setTotp(await generateTotpSecret(username || 'utilisateur', forceApiError))
+            setTotp(await generateTotpSecret(username || 'utilisateur'))
             setTotpState('success')
         } catch (error) {
             setTotpState('error')
             setTotpError(error instanceof Error ? error.message : 'Erreur inattendue.')
-        }
-    }
-
-    const finalize = async () => {
-        setFinalState('loading')
-        try {
-            const data = await finalizeRotation(forceApiError)
-            setNewExpiry(data.expiresAt)
-            setExpiresAt(data.expiresAt)
-            setFinalState('success')
-        } catch {
-            setFinalState('error')
         }
     }
 
@@ -105,9 +90,8 @@ export function RenewAccount() {
                                 )}
                                 {pwdState === 'success' && pwd && (
                                     <QrPanel
-                                        value={pwd.payload}
+                                        value={pwd.qrImage}
                                         oneTime
-                                        badge="Nouveau mot de passe"
                                         caption="QR code à usage unique contenant le nouveau mot de passe de 24 caractères."
                                     />
                                 )}
@@ -140,8 +124,7 @@ export function RenewAccount() {
                                 )}
                                 {totpState === 'success' && totp && (
                                     <QrPanel
-                                        value={totp.otpauthUri}
-                                        badge="Nouveau QR code TOTP"
+                                        value={totp.qrImage}
                                         caption="Supprimez l'ancienne entrée dans Google Authenticator, puis scannez ce nouveau QR code."
                                     />
                                 )}
@@ -150,62 +133,22 @@ export function RenewAccount() {
                         </Card>
                     </div>
 
-                    <Card aria-labelledby="finaliser">
-                        <h2 id="finaliser" className="text-lg font-semibold text-ink">
-                            3. Finaliser le renouvellement
-                        </h2>
-                        <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-muted">
-                            Disponible une fois les deux secrets régénérés. Réactive le compte pour 6 mois.
-                        </p>
-                        <div className="mt-4 flex flex-wrap items-center gap-3">
-                            <Button
-                                onClick={finalize}
-                                disabled={!bothDone || finalState === 'success'}
-                                loading={finalState === 'loading'}
-                                icon={<CheckCircle2Icon aria-hidden="true" className="h-5 w-5" />}
-                            >
-                                Réactiver le compte
-                            </Button>
-                            {!bothDone && (
-                                <p className="text-sm text-ink-muted">
-                                    Action désactivée : régénérez d'abord le mot de passe et le secret TOTP.
-                                </p>
-                            )}
-                        </div>
-
-                        {finalState === 'error' && (
+                    {bothDone && (
+                        <Card aria-labelledby="apres-rotation">
+                            <h2 id="apres-rotation" className="text-lg font-semibold text-ink">
+                                Identifiants régénérés
+                            </h2>
+                            <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-muted">
+                                Le mot de passe et le secret TOTP ont été remplacés. Retournez à la connexion
+                                avec les nouveaux QR codes scannés.
+                            </p>
                             <div className="mt-4">
-                                <Alert tone="error" title="Réactivation refusée par le backend">
-                                    La fonction <code className="font-mono">rotate-credentials</code> a renvoyé une
-                                    erreur. Les nouveaux secrets restent valables, relancez la finalisation.
-                                </Alert>
+                                <Button variant="secondary" onClick={() => navigate('/connexion')}>
+                                    Retourner à la connexion
+                                </Button>
                             </div>
-                        )}
-
-                        {finalState === 'success' && newExpiry && (
-                            <div className="mt-4">
-                                <Alert
-                                    tone="success"
-                                    title="Compte réactivé"
-                                    actions={
-                                        <Button variant="secondary" onClick={() => navigate('/connexion')}>
-                                            Retourner à la connexion
-                                        </Button>
-                                    }
-                                >
-                                    Prochaine expiration le{' '}
-                                    <strong>
-                                        {new Date(newExpiry).toLocaleDateString('fr-FR', {
-                                            day: '2-digit',
-                                            month: 'long',
-                                            year: 'numeric',
-                                        })}
-                                    </strong>
-                                    . Un rappel sera envoyé 15 jours avant.
-                                </Alert>
-                            </div>
-                        )}
-                    </Card>
+                        </Card>
+                    )}
                 </div>
             </div>
         </div>

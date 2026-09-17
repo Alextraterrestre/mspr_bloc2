@@ -8,12 +8,12 @@ import { Button } from '../Components/UI/Button'
 import { Card } from '../Components/UI/Card'
 import { Field } from '../Components/UI/Fields'
 import { useDemo } from '../Contexts/DemoContext'
-import { generatePassword } from '../Utils/MockApi'
+import { generatePassword } from '../Utils/Api'
 import type { GeneratedPassword, RequestState } from '../Types'
 
 export function CreateAccount() {
     const navigate = useNavigate()
-    const { username, setUsername, setPasswordIssued, setExpiresAt, forceApiError } = useDemo()
+    const { username, setUsername, setPasswordIssued, setExpiresAt } = useDemo()
     const [state, setState] = useState<RequestState>('idle')
     const [fieldError, setFieldError] = useState<string | undefined>()
     const [apiError, setApiError] = useState<string | undefined>()
@@ -30,7 +30,7 @@ export function CreateAccount() {
         setApiError(undefined)
         setState('loading')
         try {
-            const data = await generatePassword(value, forceApiError)
+            const data = await generatePassword(value)
             setResult(data)
             setState('success')
             setPasswordIssued(true)
@@ -128,7 +128,7 @@ export function CreateAccount() {
                                 </Alert>
 
                                 <QrPanel
-                                    value={result.payload}
+                                    value={result.qrImage}
                                     oneTime
                                     badge="QR code à usage unique"
                                     caption="Ce QR code contient le mot de passe de 24 caractères généré par le backend. Scannez-le avec votre gestionnaire de mots de passe : il ne sera plus affiché après avoir quitté cet écran."

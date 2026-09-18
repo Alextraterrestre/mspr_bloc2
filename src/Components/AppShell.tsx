@@ -109,21 +109,6 @@ export function AppShell() {
                                 </NavLink>
                             </li>
                         ))}
-                        <li className="mt-2 border-t border-line pt-2">
-                            {/* <NavLink
-                                to="/style-guide"
-                                className={({ isActive }) =>
-                                    [
-                                        'flex min-h-[48px] items-center rounded-md border px-3 text-[15px] font-semibold transition-colors duration-150 ease-out',
-                                        isActive
-                                            ? 'border-brand-600 bg-white text-brand-800'
-                                            : 'border-transparent text-ink hover:border-line hover:bg-white',
-                                    ].join(' ')
-                                }
-                            >
-                                Style guide
-                            </NavLink> */}
-                        </li>
                     </ol>
                 </nav>
 

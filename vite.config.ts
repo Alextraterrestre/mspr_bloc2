@@ -7,7 +7,7 @@ export default defineConfig({
     proxy: {
       '/function':
       {
-        target: 'http://gateway.openfaas:8080',
+        target: 'http://gateway.openfaas:31112',
         changeOrigin: true
       }
     },

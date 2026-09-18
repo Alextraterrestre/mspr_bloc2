@@ -16,6 +16,7 @@ export async function generatePassword(username: string): Promise<GeneratedPassw
     const qrImage = await res.text()
     const expiresAt = new Date()
     expiresAt.setMonth(expiresAt.getMonth() + 6)
+    
     return { qrImage, expiresAt: expiresAt.toISOString() }
 }
 

@@ -13,11 +13,17 @@ import type { LoginError, RequestState } from '../Types'
 export function Login() {
     const navigate = useNavigate()
     const { username, setUsername } = useDemo()
+    console.log("🚀 ~ Login ~ username:", username)
     const [password, setPassword] = useState('')
+    console.log("🚀 ~ Login ~ password:", password)
     const [totp, setTotp] = useState('')
+    console.log("🚀 ~ Login ~ totp:", totp)
     const [showPassword, setShowPassword] = useState(false)
+    console.log("🚀 ~ Login ~ showPassword:", showPassword)
     const [state, setState] = useState<RequestState>('idle')
+    console.log("🚀 ~ Login ~ state:", state)
     const [error, setError] = useState<LoginError | null>(null)
+    console.log("🚀 ~ Login ~ error:", error)
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
@@ -34,7 +40,8 @@ export function Login() {
 
     const isExpired = error?.code === 'ACCOUNT_EXPIRED'
     const disabled = state === 'loading'
-
+console.log(isExpired)
+console.log(disabled)
     return (
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
             <div>

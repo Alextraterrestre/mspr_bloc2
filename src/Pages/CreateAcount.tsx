@@ -39,8 +39,9 @@ export function CreateAccount() {
             setState('error')
             setApiError(error instanceof Error ? error.message : 'Erreur inattendue.')
         }
+        console.log(value)
     }
-
+    console.log(handleSubmit)
     return (
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
             <div>
